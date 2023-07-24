@@ -5,8 +5,11 @@ set current_path=%~dp0
 ::database configuration
 set DATABASE_HOST=127.0.0.1
 set DATABASE_PORT=3001
+::the database that will be automaticaly created
 set DATABASE_NAME=testDatabase
-set DATABASE_USER=root
+::do not change user=root. if you want an other user create it manually after connecting with root.
+set DATABASE_USER=root 
+::strongly recommended to change this password for a stronger one !!!
 set DATABASE_PASSWORD=root
 
 ::working dir
