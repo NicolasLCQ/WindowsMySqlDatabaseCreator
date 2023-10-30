@@ -3,7 +3,7 @@ setlocal enabledelayedexpansion
 set current_path=%~dp0
 
 ::database configuration
-set DATABASE_SERVER_PORT=3001
+set DATABASE_SERVER_PORT=3005
 :: Don't change USER If you want an other user create it manually after connecting with root.
 set DATABASE_SERVER_USER=root
 ::strongly recommended to change this password for a stronger one !
@@ -36,18 +36,18 @@ if %DATABASE_DATA_DIRECTORY_DESTINATION_PATH% == %current_path% (
 if exist "%DATABASE_DIRECTORY_DESTINATION_PATH%" (
   echo Directory %DATABASE_DIRECTORY_DESTINATION_PATH% already exist. Skipping installation ...
 ) else (
-  echo downloading sql server archive from oracle website : https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-8.0.32-winx64.zip to %current_path%%zipName% ...
-  powershell -Command "& { Invoke-WebRequest 'https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-8.0.32-winx64.zip' -OutFile '%zipName%' }"
+  echo downloading sql server archive from oracle website : https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-8.0.34-winx64.zip to %current_path%%zipName% ...
+  powershell -Command "& { Invoke-WebRequest 'https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-8.0.34-winx64.zip' -OutFile '%zipName%' }"
 
   echo unzip %current_path%%zipName% to %DATABASE_DIRECTORY_DESTINATION_PATH%...
   powershell Expand-Archive -LiteralPath "%zipName%" -DestinationPath "%DATABASE_DIRECTORY_DESTINATION_PATH%"
 
   echo taking zip content to %DATABASE_DIRECTORY_DESTINATION_PATH% ... 
-  xcopy "%DATABASE_DIRECTORY_DESTINATION_PATH%\mysql-8.0.32-winx64\*" "%DATABASE_DIRECTORY_DESTINATION_PATH%\" /E /H /C /Y
+  xcopy "%DATABASE_DIRECTORY_DESTINATION_PATH%\mysql-8.0.34-winx64\*" "%DATABASE_DIRECTORY_DESTINATION_PATH%\" /E /H /C /Y
 
   echo deleting :
   echo unzip file...
-  rd /S /Q "%DATABASE_DIRECTORY_DESTINATION_PATH%\mysql-8.0.32-winx64"
+  rd /S /Q "%DATABASE_DIRECTORY_DESTINATION_PATH%\mysql-8.0.34-winx64"
   echo zip file ...
   del %zipName%
 )
@@ -105,7 +105,7 @@ if exist "%DATABASE_DATA_DIRECTORY_DESTINATION_PATH%" (
   pause
 )
 ::launch database server if needed
-%DATABASE_DIRECTORY_DESTINATION_PATH%/bin/mysqld.exe --basedir=%DATABASE_DIRECTORY_DESTINATION_PATH% --datadir=%DATABASE_DATA_DIRECTORY_DESTINATION_PATH% --console --port=%DATABASE_SERVER_PORT% 
+%DATABASE_DIRECTORY_DESTINATION_PATH%/bin/mysqld.exe --basedir=%DATABASE_DIRECTORY_DESTINATION_PATH% --datadir=%DATABASE_DATA_DIRECTORY_DESTINATION_PATH% --console --port=%DATABASE_SERVER_PORT%  --verbose
 
 endlocal
 ::Everything done ...
